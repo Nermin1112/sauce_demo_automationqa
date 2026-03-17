@@ -11,25 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: Upgrade pip
-      run: pip install --upgrade pip
+      - run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install --with-deps
 
-    - name: Install dependencies
-      run: pip install -r requirements.txt
+      - run: |
+          pytest \
+            --html=report.html \
+            --self-contained-html \
+            -n auto \
+            --capture=tee-sys
 
-    - name: Install Playwright browsers
-      run: |
-        pip install playwright
-        playwright install --with-deps
-
-    - name: Run tests with HTML report
-      run: |
-        pytest --html=report.html --self-contained-html
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ui-test-report
+          path: report.html
