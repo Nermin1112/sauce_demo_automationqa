@@ -1,4 +1,4 @@
-
+![UI Tests](https://github.com/Nermin1112/sauce_demo_automationqa/actions/workflows/ui-test.yml/badge.svg)
 
 # Playwright UI Automation
 
